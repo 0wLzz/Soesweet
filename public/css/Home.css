@@ -1,0 +1,30 @@
+.hero-section{
+    background-image: url("../Asset/home.png");
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+}
+
+.pink {
+    background-color:#ED6665;
+}
+
+.green{
+    background-color: #98AF95;
+}
+
+.navbar{
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.navbar.bg-transparent {
+    background-color: transparent;
+}
+.navbar.scrolled {
+    background-color: white !important;
+}
+
+.navbar.scrolled .nav-link,
+.navbar.scrolled .navbar-brand span {
+    color: black !important;
+}

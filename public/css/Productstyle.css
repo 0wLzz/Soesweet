@@ -1,0 +1,24 @@
+#banner{
+    background-image: url("../Asset/home.png");
+    object-fit: contain;
+};
+
+#NAV{
+    justify-content: space-between !important;
+}
+
+.nav-link{
+    color:#ED6665;
+}
+
+.pink {
+    background-color:#ED6665;
+}
+
+.green{
+    background-color: #98AF95;
+}
+
+.greenOld{
+    background-color: #78a871;
+}
