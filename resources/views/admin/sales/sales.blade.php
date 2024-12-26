@@ -131,84 +131,87 @@
                                 $invoiceHeader = $details->first()->invoiceHeader;
                             @endphp
                             @if ($invoiceHeader->status === 'Proses')
-                            <tr>
-                                <th scope="row">{{ $loop->iteration }}</th>
-                                <td>{{ $invoiceHeader->user->name ?? 'Unknown User' }}</td>
-                                <td>{{ $invoiceHeader->created_at->format('d-m-Y') }}</td>
-                                @if ($invoiceHeader->status === 'Diterima')
-                                    <td class="text-success">{{ $invoiceHeader->status }}</td>
-                                @elseif ($invoiceHeader->status === 'Cancel')
-                                    <td class="text-danger">{{ $invoiceHeader->status }}</td>
-                                @else
-                                    <td>{{ $invoiceHeader->status }}</td>
-                                @endif
-                                <td>
-                                    <button class="btn btn-outline-primary" data-bs-toggle="modal"
-                                            data-bs-target="#InvoiceModal{{ $headerId }}">
-                                        View Details
-                                    </button>
+                                <tr>
+                                    <th scope="row">{{ $loop->iteration }}</th>
+                                    <td>{{ $invoiceHeader->user->name ?? 'Unknown User' }}</td>
+                                    <td>{{ $invoiceHeader->created_at->format('d-m-Y') }}</td>
+                                    @if ($invoiceHeader->status === 'Diterima')
+                                        <td class="text-success">{{ $invoiceHeader->status }}</td>
+                                    @elseif ($invoiceHeader->status === 'Cancel')
+                                        <td class="text-danger">{{ $invoiceHeader->status }}</td>
+                                    @else
+                                        <td>{{ $invoiceHeader->status }}</td>
+                                    @endif
+                                    <td>
+                                        <button class="btn btn-outline-primary" data-bs-toggle="modal"
+                                                data-bs-target="#InvoiceModal{{ $headerId }}">
+                                            View Details
+                                        </button>
 
-                                    <!-- Modal for each Invoice Header -->
-                                    <div class="modal fade" id="InvoiceModal{{ $headerId }}" tabindex="-1" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered modal-lg">
+                                        <!-- Modal for each Invoice Header -->
+                                        <div class="modal fade" id="InvoiceModal{{ $headerId }}" tabindex="-1" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered modal-lg">
 
 
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h1 class="modal-title fs-5">Invoice Details for Header ID: {{ $headerId }}</h1>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <div class="d-flex justify-content-evenly">
-                                                        <p><strong>Admin:</strong> {{ $invoiceHeader->admin->name ?? 'Unknown Admin' }}</p>
-                                                        <p><strong>User:</strong> {{ $invoiceHeader->user->name ?? 'Unknown User' }}</p>
-                                                        <p><strong>Alamat:</strong> {{ $invoiceHeader->user->address ?? 'Unknown User' }}</p>
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h1 class="modal-title fs-5">Invoice Details for Header ID: {{ $headerId }}</h1>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                     </div>
-                                                    <table class="table table-striped">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>Product</th>
-                                                                <th>Quantity</th>
-                                                                <th>Price</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            @foreach ($details as $detail)
-                                                            <tr>
-                                                                <td>{{ $detail->product->name }}</td>
-                                                                <td>{{ $detail->quantity }}</td>
-                                                                <td>Rp {{ number_format($detail->product->price, 0, ',', '.') }}</td>
-                                                            </tr>
-                                                            @endforeach
-                                                            <tr>
-                                                                <td colspan="2" class="fw-bold">Total</td>
-                                                                <td>Rp {{ number_format($invoiceHeader->total_price, 0, ',', '.') }}</td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-
-                                                @if ($invoiceHeader->status === 'Pending')
-                                                    <div class="modal-footer d-flex justify-content-center w-100">
+                                                    <div class="modal-body">
+                                                        <div class="d-flex justify-content-evenly">
+                                                            <p><strong>Admin:</strong> {{ $invoiceHeader->admin->name ?? 'Unknown Admin' }}</p>
+                                                            <p><strong>User:</strong> {{ $invoiceHeader->user->name ?? 'Unknown User' }}</p>
+                                                            <p><strong>Alamat:</strong> {{ $invoiceHeader->user->address ?? 'Unknown User' }}</p>
+                                                        </div>
+                                                        <table class="table table-striped">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Product</th>
+                                                                    <th>Quantity</th>
+                                                                    <th>Price</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach ($details as $detail)
+                                                                <tr>
+                                                                    <td>{{ $detail->product->name }}</td>
+                                                                    <td>{{ $detail->quantity }}</td>
+                                                                    <td>Rp {{ number_format($detail->product->price, 0, ',', '.') }}</td>
+                                                                </tr>
+                                                                @endforeach
+                                                                <tr>
+                                                                    <td colspan="2" class="fw-bold">Total</td>
+                                                                    <td>Rp {{ number_format($invoiceHeader->total_price, 0, ',', '.') }}</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <div class="modal-footer justify-content-center w-100">
                                                         <form id="updateStatusForm" method="POST" action="{{route('update_status', $invoiceHeader)}}">
                                                             @csrf
-                                                            <div class="mb-3 me-3">
-                                                                <label for="status" class="form-label">Status</label>
-                                                                <select class="form-select" id="status" name="status" required>
-                                                                    <option value="Pending">Pending</option>
-                                                                    <option value="Diterima">Diterima</option>
-                                                                    <option value="Cancel">Cancel</option>
-                                                                </select>
+                                                            <input type="hidden" value="{{$admin->id}}" name="admin_id">
+                                                            <div class="d-flex">
+                                                                <div class="mb-3 me-3">
+                                                                    <label for="status" class="form-label">Status</label>
+                                                                    <select class="form-select" id="status" name="status" required>
+                                                                        <option value="Diterima">Diterima</option>
+                                                                        <option value="Cancel">Cancel</option>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="mb-3 me-3">
+                                                                    <label for="status" class="form-label">Reason Of Canceling</label>
+                                                                    <input type="text" name="reason_cancel">
+                                                                </div>
                                                             </div>
                                                             <button type="submit" class="btn btn-primary">Update</button>
                                                         </form>
                                                     </div>
-                                                @endif
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </td>
-                            </tr>
+                                    </td>
+                                </tr>
                             @endif
                         @endforeach
                     </tbody>
@@ -289,24 +292,11 @@
                                                             </tr>
                                                         </tbody>
                                                     </table>
-                                                </div>
-
-                                                @if ($invoiceHeader->status === 'Pending')
-                                                    <div class="modal-footer d-flex justify-content-center w-100">
-                                                        <form id="updateStatusForm" method="POST" action="{{route('update_status', $invoiceHeader)}}">
-                                                            @csrf
-                                                            <div class="mb-3 me-3">
-                                                                <label for="status" class="form-label">Status</label>
-                                                                <select class="form-select" id="status" name="status" required>
-                                                                    <option value="Pending">Pending</option>
-                                                                    <option value="Diterima">Diterima</option>
-                                                                    <option value="Cancel">Cancel</option>
-                                                                </select>
-                                                            </div>
-                                                            <button type="submit" class="btn btn-primary">Update</button>
-                                                        </form>
+                                                    <div>
+                                                        <p>Reason for Canceling: <b>{{$invoiceHeader->cancel}}</b></p>
+                                                        <p>Review: <b> {{$invoiceHeader->review}} </b></p>
                                                     </div>
-                                                @endif
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

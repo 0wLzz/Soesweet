@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('invoice_headers', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger("user_id");
-            $table->unsignedBigInteger("admin_id");
+            $table->unsignedBigInteger("admin_id")->nullable();
             $table->integer("total_price");
             $table->longText('review')->nullable();
             $table->string('status');

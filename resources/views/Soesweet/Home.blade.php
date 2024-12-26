@@ -18,7 +18,7 @@
         <div class="collapse navbar-collapse" id="navbarContent">
             <ul class="navbar-nav mx-auto d-flex justify-content-evenly w-100">
                 <li class="nav-item"><a class="nav-link text-center text-white fw-bold" href="#GAM">About Us</a></li>
-                <li class="nav-item"><a class="nav-link text-center text-white fw-bold" href="#Products">Menu</a></li>
+                <li class="nav-item"><a class="nav-link text-center text-white fw-bold" href="{{route('product_page')}}">Menu</a></li>
                 <li class="nav-item"><a class="nav-link text-center text-white fw-bold" href="#Review">Testimonial</a></li>
             </ul>
             <div class="d-flex justify-content-end mx-5">
@@ -197,7 +197,7 @@
                 </div>
             </div>
         </div>
-</section>
+    </section>
 
     <!--Reviews-->
     <section id="Review" class="my-3 py-3 bg-light">

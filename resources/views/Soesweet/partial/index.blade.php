@@ -238,9 +238,16 @@
                                 <br>
                                 <small>Satatus: <b>{{ $invoice->status }}</b></small>
                             </div>
-                            <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#invoiceModal{{ $invoice->id }}">
-                                View Details
-                            </button>
+                            <div>
+                                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#invoiceModal{{ $invoice->id }}">
+                                    View Details
+                                </button>
+                                @empty($invoice->review)
+                                    <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#invoiceReview{{ $invoice->id }}">
+                                        Add Review
+                                    </button>
+                                @endempty
+                            </div>
                         </li>
                     @endforeach
                 </ul>
@@ -249,6 +256,27 @@
             @endif
         </div>
     </div>
+
+    <!-- Review Modals -->
+    @foreach ($invoices as $invoice)
+        <div class="modal fade" id="invoiceReview{{ $invoice->id }}" tabindex="-1" aria-labelledby="invoiceReviewLabel{{ $invoice->id }}" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="invoiceReviewLabel{{ $invoice->id }}">Review</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body d-flex justify-content-center">
+                        <form action="{{route('add_review', $invoice->id)}}" method="POST">
+                            @csrf
+                            <input type="text" name="review">
+                            <button class="btn btn-primary btn-sm mx-4" type="submit">Add Review</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endforeach
 
     <!-- Invoice Details Modals -->
     @foreach ($invoices as $invoice)

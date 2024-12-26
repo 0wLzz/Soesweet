@@ -47,17 +47,19 @@ class SalesController extends Controller
 
     public function update_status(Request $request, InvoiceHeader $invoiceHeader){
 
-        // if($request->status === 'Cancel'){
-        //     // Asumsikan $invoiceHeader adalah objek InvoiceHeader
-        //     $user = User::find($invoiceHeader->user_id);
-        //     $user->update([
-        //        'money' => $user->money += $invoiceHeader->total_price
-        //     ]);
-        //     $user->save();
-        // }
+        if($request->status === 'Cancel'){
+            // Asumsikan $invoiceHeader adalah objek InvoiceHeader
+            $user = User::find($invoiceHeader->user_id);
+            $user->update([
+               'money' => $user->money += $invoiceHeader->total_price
+            ]);
+            $user->save();
+        }
 
         $invoiceHeader->update([
             'status' => $request->status,
+            'cancel' => $request->reason_cancel,
+            'admin_id' => $request->admin_id
         ]);
         $invoiceHeader->save();
 

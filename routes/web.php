@@ -20,6 +20,7 @@ Route::get('/buy/{product}', [OrderController::class, 'buy'])->name('buy_product
 Route::get('/order/{product}', [OrderController::class, 'order'])->name('order_product');
 Route::get('/checkout/{total}', [OrderController::class, 'checkout'])->name('checkout_product');
 Route::delete('/delete/{id}', [OrderController::class, 'delete_from_cart'])->name('delete_from_cart');
+Route::post('/review/{id}', [OrderController::class, 'addReview'])->name('add_review');
 
 // Admin Routes with Middleware
 Route::prefix('admin')->group(function () {

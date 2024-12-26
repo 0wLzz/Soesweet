@@ -17,10 +17,18 @@ class InvoiceHeaderFactory extends Factory
     public function definition(): array
     {
         $status = $this->faker->randomElement(['Proses', 'Diterima', 'Cancel']);
+
+        if($status !== 'Proses'){
+            $admin = $this->faker->numberBetween(1,2);
+        }
+        else {
+            $admin = null;
+        }
+
         return [
             'id' => $this->faker->unique()->numberBetween(1,1000),
             'user_id' => $this->faker->numberBetween(1,10),
-            'admin_id' => $this->faker->numberBetween(1,2),
+            'admin_id' => $admin,
             'total_price' => $this->faker->randomFloat(2, 1000, 1000000),
             'review' => $this->faker->text(100),
             'status' => $status,

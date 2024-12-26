@@ -41,7 +41,7 @@ class OrderController extends Controller
         }
 
         session()->put('cart', $cart);
-        return redirect()->route('login')->with('status', 'Added to Cart!');
+        return redirect()->back()->with('status', 'Added to Cart!');
     }
 
     public function buy(Product $product) {
@@ -72,7 +72,7 @@ class OrderController extends Controller
         $product->stock -= 1;
         $product->save();
 
-        return redirect()->route('login')->with('status', 'Successful!');
+        return redirect()->back()->with('status', 'Successful!');
     }
 
     public function category (Category $category) {
@@ -141,4 +141,14 @@ class OrderController extends Controller
         return redirect()->back()->with('status', 'Item removed from cart');
     }
 
+    public function addReview(Request $request, $id){
+        $invoice = InvoiceHeader::find($id);
+
+        $invoice->update([
+            'review' => $request->review
+        ]);
+
+        $invoice->save();
+        return back()->with('success', 'Review added successfully! Thank you <3');
+    }
 }
