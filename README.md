@@ -17,9 +17,3 @@
     <li><strong>Database:</strong> MySQL</li>
     <li><strong>Hosting:</strong> Deployed on <a href="#">[hosting platform, e.g., Heroku/Vercel]</a></li>
 </ul>
-
-<h2>Contribute</h2>
-<p>We welcome contributions! Feel free to fork the repository, submit issues, or make pull requests to help us improve SoeSweet.</p>
-
-<h2>License</h2>
-<p>This project is licensed under the <a href="https://opensource.org/licenses/MIT">MIT License</a>.</p>
